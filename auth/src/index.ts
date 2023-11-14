@@ -2,6 +2,7 @@ import express from "express";
 import { json } from "body-parser";
 
 import { errorHandler } from "./middlewares/error-handler";
+import { NotFoundError } from "./errors/not-found-error";
 
 import {
   currentUserRouter,
@@ -17,6 +18,10 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+
+app.all("*", () => {
+  throw new NotFoundError();
+});
 
 app.use(errorHandler);
 
