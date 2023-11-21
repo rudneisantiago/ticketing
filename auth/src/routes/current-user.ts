@@ -1,9 +1,15 @@
 import express from "express";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
 router.get("/api/users/currentuser", (req, res) => {
-  res.send("Hello World");
+  if (!req.session || !req.session.jwt) {
+    return res.send({ currentUser: null });
+  }
+
+  const currentUser = jwt.decode(req.session.jwt);
+  res.send({ currentUser });
 });
 
 export { router as currentUserRouter };
