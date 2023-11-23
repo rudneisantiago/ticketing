@@ -8,8 +8,12 @@ router.get("/api/users/currentuser", (req, res) => {
     return res.send({ currentUser: null });
   }
 
-  const currentUser = jwt.decode(req.session.jwt);
-  res.send({ currentUser });
+  try {
+    const payload = jwt.verify(req.session.jwt, process.env.JWT_KEY!);
+    res.send({ currentUser: payload });
+  } catch (err) {
+    res.send({ currentUser: null });
+  }
 });
 
 export { router as currentUserRouter };
