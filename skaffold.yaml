@@ -16,3 +16,11 @@ build:
         manual:
           - src: "src/**/*.{js,ts}"
             dest: .
+    - image: rgsantiago/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
