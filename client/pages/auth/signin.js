@@ -1,0 +1,57 @@
+import { useState } from "react";
+import Router from "next/router";
+import useRequest from "../../hooks/use-request";
+
+export default () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { doRequest, errors } = useRequest({
+    url: "/api/users/signin",
+    method: "post",
+    body: {
+      email,
+      password,
+    },
+    onSuccess: () => Router.push("/"),
+  });
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    doRequest();
+  };
+
+  return (
+    <main className="d-flex p-4 align-items-center justify-content-center">
+      <form onSubmit={onSubmit} className="bg-white p-4 rounded shadow">
+        <h1>Sign In</h1>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email Address
+          </label>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            id="email"
+            type="text"
+            className="form-control"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Email Address
+          </label>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            type="password"
+            className="form-control"
+          />
+        </div>
+        {errors}
+        <button className="btn btn-primary">Sign In</button>
+      </form>
+    </main>
+  );
+};
