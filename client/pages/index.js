@@ -1,31 +1,17 @@
-import axios from "axios";
+import buildClient from "../api/build-client";
 
 const LandingPage = ({ currentUser }) => {
-  console.log(currentUser);
-  return <h1>Olá mundo!</h1>;
+  return (
+    <div className="container">
+      {currentUser ? <h1>Usuário logado!</h1> : <h1>Usuário deslogado!</h1>}
+    </div>
+  );
 };
 
-LandingPage.getInitialProps = async ({ req }) => {
-  if (typeof window === "undefined") {
-    const { data } = await axios
-      .get(
-        "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser",
-        {
-          headers: req.headers,
-        }
-      )
-      .catch((err) => {
-        console.log(err.message);
-      });
-
-    return data;
-  } else {
-    const { data } = await axios.get("/api/users/currentuser").catch((err) => {
-      console.log(err.message);
-    });
-
-    return data;
-  }
+LandingPage.getInitialProps = async (context) => {
+  const client = buildClient(context);
+  const { data } = await client.get("/api/users/currentuser");
+  return data;
 };
 
 export default LandingPage;
