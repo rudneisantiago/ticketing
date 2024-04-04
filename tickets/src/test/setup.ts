@@ -4,7 +4,7 @@ import request from "supertest";
 import { app } from "../app";
 
 declare global {
-  var signup: () => Promise<string[]>;
+  var signup: () => Promise<string[] | undefined>;
 }
 
 let mongo: MongoMemoryServer;
