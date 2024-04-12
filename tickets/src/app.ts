@@ -4,7 +4,12 @@ import { json } from "body-parser";
 import cookieSession from "cookie-session";
 import { errorHandler, NotFoundError, currentUser } from "@rgsticketing/common";
 
-import { createTicketRouter, showTicketRouter } from "./routes";
+import {
+  createTicketRouter,
+  indexTicketRouter,
+  showTicketRouter,
+  updateTicketRouter,
+} from "./routes";
 
 const app = express();
 app.set("trust proxy", true);
@@ -17,8 +22,12 @@ app.use(
 );
 app.use(currentUser);
 
-app.use(createTicketRouter);
-app.use(showTicketRouter);
+app.use([
+  createTicketRouter,
+  showTicketRouter,
+  indexTicketRouter,
+  updateTicketRouter,
+]);
 
 app.all("*", async (req, res, next) => {
   throw new NotFoundError();
