@@ -18,7 +18,7 @@
   "author": "Rudnei Santiago",
   "license": "ISC",
   "dependencies": {
-    "@rgsticketing/common": "^1.0.8",
+    "@rgsticketing/common": "^1.0.9",
     "@types/express": "^4.17.21",
     "@types/mongoose": "^5.11.97",
     "cookie-session": "^2.1.0",
