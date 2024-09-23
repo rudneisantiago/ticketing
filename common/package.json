@@ -1,6 +1,6 @@
 {
   "name": "@rgsticketing/common",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Common library used in ticketing project",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
