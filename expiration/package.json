@@ -18,7 +18,7 @@
   "author": "Rudnei Santiago",
   "license": "ISC",
   "dependencies": {
-    "@rgsticketing/common": "^1.0.14",
+    "@rgsticketing/common": "^1.0.15",
     "@types/bull": "^3.15.9",
     "bull": "^4.16.4",
     "node-nats-streaming": "^0.3.2",
