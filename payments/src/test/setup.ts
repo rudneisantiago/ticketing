@@ -1,16 +1,21 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 declare global {
   var signin: (id?: string) => string[];
 }
+
+dotenv.config({ path: `${process.cwd()}/src/.env` });
 
 jest.mock("../nats-wrapper");
 
 let mongo: MongoMemoryServer;
 beforeAll(async () => {
   process.env.JWT_KEY = "asdfasdf";
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
   mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
