@@ -4,14 +4,10 @@ import { OrderStatus } from "@rgsticketing/common";
 import { app } from "../../app";
 import { Order } from "../../models/order";
 import { stripe } from "../../stripe";
+import { Payment } from "../../models/payments";
 
 // Old implementation of stripe with mock
 // jest.mock("../../stripe");
-
-it("stripepa e stripape", async () => {
-  const chave = process.env.STRIPE_KEY;
-  expect(chave).toBeDefined();
-});
 
 it("Returns a 404 when purchasing an order that does not exist", async () => {
   await request(app)
@@ -98,6 +94,13 @@ it("Returns a 201 with valid inputs", async () => {
 
   expect(stripeCharge).toBeDefined();
   expect(stripeCharge?.currency).toEqual("brl");
+
+  const payment = await Payment.findOne({
+    orderId: order.id,
+    stripeId: stripeCharge?.id,
+  });
+
+  expect(payment).not.toBeNull();
 
   /**
    * Old implementation of stripe with mock
